@@ -9,6 +9,7 @@ class User extends Model {
   public password!: string;
   public address!: string;
   public session!: boolean;
+  public status!: boolean;
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
@@ -45,12 +46,13 @@ User.init(
     status: {
       type: DataTypes.BOOLEAN,
       defaultValue: false, // Assuming default status is false (inactive)
-    },
+    }
   },
   {
-      tableName: "users",
-      sequelize,
+    sequelize,
+    modelName: "users",
+    timestamps:true
   }
 );
-sequelize.sync({alter:true})
+User.sync({alter:true})
 export default User;
