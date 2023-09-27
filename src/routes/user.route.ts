@@ -13,6 +13,7 @@ class UserRouter{
     userRouter(){
         this.router.get("/home",userController.home);
         this.router.post("/signup",registerUserMiddleware,userController.signup)
+        this.router.post("/verify",userController.verify)
         return this.router;
     }
 }

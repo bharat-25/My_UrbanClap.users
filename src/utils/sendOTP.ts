@@ -10,9 +10,9 @@ class Otp{
         let otp=Math.floor(1000 + Math.random() * 9000)
         loggers.info(`OTP is ${otp}`);
         const storeOTPInRedis= await RedisClient.setKey(`${Email}`,JSON.stringify(otp),{EX: 300 });
-        console.log("-------------------------------------------------------redis store ------------------------------",storeOTPInRedis)
+        console.log("-------------------------------------------------------redis store ------------------------------")
         let text_message=`${EMAIL.EMAIL_TEXT}${otp}`
-        console.log("222222222222222222",text_message)
+        console.log(text_message)
         const res=await sendEmail(Email,EMAIL.EMAIL_SUBJECT,text_message)
         return true
     }
