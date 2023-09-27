@@ -32,6 +32,6 @@ export const RESPONSE_MESSAGES = {
 
 export const EMAIL={
     EMAIL_SUBJECT:'URBAN_CLAP_VERIFICATION_CODE',
-    EMAIL_TEXT:'This is your verification OTP and valid only for 5 min. Your OTP is : ',
+    EMAIL_TEXT:'Hi,\nThank you for choosing Your Brand. Use the following OTP to complete your Sign Up procedures. OTP is valid for 5 minutes. \nYour OTP is : ',
     EMAIL_STATUS:'EMAIL NOT SEND',
 }
