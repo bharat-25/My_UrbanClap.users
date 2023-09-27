@@ -1,10 +1,10 @@
 import express from "express"
 import { Router } from "express";
 import { userController } from "../controllers/user.controller";
-import {registerUserMiddleware} from "../middlewares/joivalidation/user-validation"
+import {registerUserMiddleware, verifyUserMiddleware} from "../middlewares/joivalidation/user-validation"
 const userRoute = express.Router();
 
-class UserRouter{
+class UserRouter{ 
     private router!:Router;
     constructor(){
         this.router=Router();
@@ -13,7 +13,7 @@ class UserRouter{
     userRouter(){
         this.router.get("/home",userController.home);
         this.router.post("/signup",registerUserMiddleware,userController.signup)
-        this.router.post("/verify",userController.verify)
+        this.router.post("/verify",verifyUserMiddleware,userController.verify)
         return this.router;
     }
 }
