@@ -5,34 +5,7 @@ import { AcceptAny } from "../interfaces/global.interface";
 import { OTP } from "../utils/sendOTP";
 import { error } from "console";
 import { loggers } from "../middlewares/logger/logger.middleware";
-
-// export const registerUsers = async (userData:AcceptAny) => {
-//   try {
-//     const { username, email, password, phone_number, address } = userData;
-//     const encryptedPassword = await bcrypt.hash(password,5);
-    
-//     const userExists =await User.findOne({ where: {email: userData.email}});
-//     console.log("+++++++++++++++",userExists.email)
-//     if(userExists && userData.email){
-//       throw new error("User Already Exist. No need to Signup.. just login")
-//     }
-
-//     // Create a new user record in the database
-//     const user = await User.create({
-//       username,
-//       phone_number,
-//       email,
-//       password: encryptedPassword,
-//       address
-//     });
-//     const hii=await OTP.verifyOTP(email)
-//     console.log(hii)
-//     return user;
-//   } catch (error) {
-//     console.error('Error registering user:', error);
-//     return null; 
-//   }
-// };
+import { RedisClient } from "../databases/redis.connect";
 
 class register_users{
 
@@ -60,26 +33,30 @@ class register_users{
         await OTP.verifyOTP(email)
         return user
       }
-    //   if(userExists==null){
-    //     const user = await User.create({
-    //       username,
-    //       phone_number,
-    //       email,
-    //       password:encryptedPassword,
-    //       address
-    //     });
-    //     const send=await OTP.verifyOTP(email)
-    //     if(send){
-    //       loggers.info("Email Send Successfully")
-    //       // return user
-    //     }
-    //     return user
-    //   }
-    // throw new Error("User Already exist!")
 
   catch (e: any) {
   throw new Error(e.message);
   }
-  }}
+  }
+  verify=async(email:string,otp:string)=>{
+    try{
+      const userExists =await User.findOne({where: {email: email}});
+      if(!userExists){
+        throw new Error("User not found!.. Please Signup ")
+      }
+      const get_otp=await RedisClient.getKey(email)
+      if(!get_otp){
+        throw new Error('OTP is expire');
+      }
+      if(otp!=get_otp){
+        throw new Error ("Invalid OTP, Resend")
+      }
+      await User.update({status:true},{where:{email:email}})
+    }catch(error){
+      throw new Error(error.message)
+    }
+  }
+
+}
 
   export const registerUsers=new register_users()

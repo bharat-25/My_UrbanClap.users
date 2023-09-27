@@ -22,14 +22,3 @@ getSequelize(){
 } 
 const Dbase=new Database();
 export const sequelize=Dbase.getSequelize();
-
-//  const dbconnection=async()=>{
-//     try{
-//         await sequelize.authenticate();
-//         console.log("Connection has been established successfully.");
-//     }catch(err){
-//         console.error("Unable to connect to the database:", err);
-//     }
-// }
-
-// export {sequelize, dbconnection };

@@ -1,3 +1,4 @@
+import { OTP } from './../utils/sendOTP';
 import { Request, Response } from "express";
 import { RESPONSE_CODES, RESPONSE_MESSAGES } from "../responses/service.responses";
 import User from "../models/user.model"
@@ -24,6 +25,16 @@ class UserController{
         } catch (error) {
           res.status(RESPONSE_CODES.INTERNAL_SERVER_ERROR).json({ message: error.message });
         }
+    }
+
+    verify=async(req:Request,res:Response)=>{
+      try{
+        const {email,OTP}=req.body;
+        const verify_user=await registerUsers.verify(email,OTP);
+        res.status(RESPONSE_CODES.CREATED).json({ message: RESPONSE_MESSAGES.USER_VERIFY });
+      }catch(error){
+        res.status(RESPONSE_CODES.UNAUTHORIZED).json({ message: error.message });
+      }
     }
 } 
 
