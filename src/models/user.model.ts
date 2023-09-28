@@ -10,6 +10,7 @@ class User extends Model {
   public address!: string;
   public session!: boolean;
   public status!: boolean;
+  public role!:string;
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
@@ -46,6 +47,10 @@ User.init(
     status: {
       type: DataTypes.BOOLEAN,
       defaultValue: false, // Assuming default status is false (inactive)
+    },
+    role:{
+      type:DataTypes.STRING,
+      defaultValue:"user"
     }
   },
   {
