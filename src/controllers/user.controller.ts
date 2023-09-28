@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { RESPONSE_CODES, RESPONSE_MESSAGES } from "../responses/service.responses";
 import User from "../models/user.model"
 import { registerUsers } from "../services/user.signup";
+import { loginUsers } from '../services/user.login';
 import { WelcomeMessages } from "../interfaces/enum";
 import { loggers } from "../middlewares/logger/logger.middleware";
 import { AcceptAny } from "../interfaces/global.interface";
@@ -34,6 +35,18 @@ class UserController{
         res.status(RESPONSE_CODES.CREATED).json({ message: RESPONSE_MESSAGES.USER_VERIFY });
       }catch(error){
         res.status(RESPONSE_CODES.UNAUTHORIZED).json({ message: error.message });
+      }
+    }
+
+    login=async(req:Request,res:Response)=>{
+      try{
+        const {email,password}=req.body;
+        const user_login=await loginUsers.login(email,password);
+        res.status(RESPONSE_CODES.SUCCESS).json({Message:RESPONSE_MESSAGES.SUCCESS})
+
+      }
+      catch{
+
       }
     }
 } 
