@@ -22,6 +22,11 @@ const verifyValidation= Joi.object({
   OTP: Joi.string().min(4).max(4).required(),
 });
 
+const loginValidation= Joi.object({
+  email: Joi.string().email().required(),
+  password: Joi.string().min(4).required(),
+});
+
 console.log("==============================================================")
 const validatedata = (schema: ObjectSchema) => {
     return (req: Request, res: Response, next: NextFunction) => {
@@ -36,4 +41,5 @@ const validatedata = (schema: ObjectSchema) => {
 
 export const registerUserMiddleware = validatedata(registerValidation);
 export const verifyUserMiddleware = validatedata(verifyValidation);
+export const loginUserMiddleware = validatedata(loginValidation);
 
