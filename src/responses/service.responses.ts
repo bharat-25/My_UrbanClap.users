@@ -36,3 +36,10 @@ export const EMAIL={
     EMAIL_TEXT:'Hi,\nThank you for choosing Your Brand. Use the following OTP to complete your Sign Up procedures. OTP is valid for 5 minutes. \nYour OTP is : ',
     EMAIL_STATUS:'EMAIL NOT SEND',
 }
+
+export const LOGIN_ERROR={
+    NOT_EXIST:'User Not Found, Please Signup',
+    NOT_MATCH:'Wrong Password',
+    NOT_VERIFY:'Not Verified!, Pls Verify your email,OTP already sent your mail ID'
+
+}
