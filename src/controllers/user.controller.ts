@@ -1,7 +1,7 @@
+import { LOGIN_ERROR } from './../responses/service.responses';
 import { OTP } from './../utils/sendOTP';
 import { Request, Response } from "express";
 import { RESPONSE_CODES, RESPONSE_MESSAGES } from "../responses/service.responses";
-import User from "../models/user.model"
 import { registerUsers } from "../services/user.signup";
 import { loginUsers } from '../services/user.login';
 import { WelcomeMessages } from "../interfaces/enum";
@@ -17,12 +17,9 @@ class UserController{
     signup= async(req:Request,res:Response)=>{
         try {
             const { username, phone_number, email, password, address } = req.body;
-
             const newUser = await registerUsers.signupUser(username, phone_number,email, password, address);
             loggers.info("NEW USER SIGNUP")
             res.status(RESPONSE_CODES.CREATED).json({ message: RESPONSE_MESSAGES.CREATED, user: newUser });
-            
-      
         } catch (error) {
           res.status(RESPONSE_CODES.INTERNAL_SERVER_ERROR).json({ message: error.message });
         }
@@ -42,11 +39,14 @@ class UserController{
       try{
         const {email,password}=req.body;
         const user_login=await loginUsers.login(email,password);
+        if(user_login=="Wrong Password"){
+         return res.status(RESPONSE_CODES.NOTFOUND).json({Message:LOGIN_ERROR.NOT_MATCH})
+        }
+        
         res.status(RESPONSE_CODES.SUCCESS).json({Message:RESPONSE_MESSAGES.SUCCESS})
-
       }
-      catch{
-
+      catch(error){
+        res.status(RESPONSE_CODES.INTERNAL_SERVER_ERROR).json({message:error})
       }
     }
 } 

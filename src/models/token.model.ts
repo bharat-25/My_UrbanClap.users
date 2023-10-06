@@ -1,19 +1,9 @@
 import { DataTypes, Model } from "sequelize";
 import  {sequelize} from "../databases/connection";
 import User from "./user.model";
+import Session from "./userSession.model";
 
-class Token extends Model {
-//   public id!: number;
-//   public username!: string;
-//   public phone_number!: string;
-//   public email!: string;
-//   public password!: string;
-//   public address!: string;
-//   public session!: boolean;
-//   public status!: boolean;
-//   public readonly createdAt!: Date;
-//   public readonly updatedAt!: Date;
-}
+class Token extends Model {}
 
 Token.init(
   {
@@ -23,22 +13,37 @@ Token.init(
       autoIncrement: true,
       allowNull: false,
     },
-    UserId:{
+    userId:{
         type:DataTypes.INTEGER,
-        allowNull:false,
         references:{
-            model:User,
-            key:"id"
-        }
+              model:User,
+              key:'id'
+          },
+        allowNull:true,
     },
     accessToken: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
       },
+
     refreshToken: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
     },
+
+    device:{
+      type:DataTypes.STRING,
+      allowNull:false,
+    //   references:{
+    //     model:Session,
+    //     key:'device'
+    // }
+    },
+    // device:{
+    //   type:DataTypes.STRING,
+    //   allowNull:true
+    // },
+
     
 
   },
@@ -48,6 +53,7 @@ Token.init(
     timestamps:true
   }
 );
+
 Token.sync({alter:true})
 
 export default Token;
