@@ -27,6 +27,7 @@ const loginValidation= Joi.object({
   password: Joi.string().min(4).required(),
 });
 
+console.log("==============================================================")
 const validatedata = (schema: ObjectSchema) => {
     return (req: Request, res: Response, next: NextFunction) => {
       const { error, value } = schema.validate(req.body);
