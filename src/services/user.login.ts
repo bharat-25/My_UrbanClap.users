@@ -41,13 +41,17 @@ class login_users{
                     const access_token= await Generate_token.AccessToken(userExists.id,userExists.role)
                     const refresh_token= await Generate_token.RefreashToken(userExists.id,userExists.role)
                     const result=await Token.create({userId:userExists.id,accessToken:access_token.jwtID,refreshToken:refresh_token.jwtID,device})
-                    return result
+                    const Access_Token=access_token.AccessToken
+                    const Refresh_Token=refresh_token.RefreshToken
+                    return {Access_Token,Refresh_Token};
                 }
 
                 const access_token= await Generate_token.AccessToken(userExists.id,userExists.role)
-                    const refresh_token= await Generate_token.RefreashToken(userExists.id,userExists.role)
-                    const result=await Token.create({userId:userExists.id,accessToken:access_token.jwtID,refreshToken:refresh_token.jwtID,device})
-                    return result
+                const refresh_token= await Generate_token.RefreashToken(userExists.id,userExists.role)
+                const result=await Token.create({userId:userExists.id,accessToken:access_token.jwtID,refreshToken:refresh_token.jwtID,device})
+                const Access_Token=access_token.AccessToken
+                const Refresh_Token=refresh_token.RefreshToken
+                return {Access_Token,Refresh_Token};
             }
             const device="UUIDV4()"
             // const device:AcceptAny=UUIDV4()
@@ -69,8 +73,9 @@ class login_users{
                 device:device,
                 is_active:true
             });
-
-            return result;
+            const Access_Token=access_token.AccessToken
+            const Refresh_Token=refresh_token.RefreshToken
+            return {Access_Token,Refresh_Token};
             
         }
         catch(error){

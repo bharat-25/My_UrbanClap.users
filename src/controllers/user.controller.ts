@@ -42,8 +42,7 @@ class UserController{
         if(user_login=="Wrong Password"){
          return res.status(RESPONSE_CODES.NOTFOUND).json({Message:LOGIN_ERROR.NOT_MATCH})
         }
-        
-        res.status(RESPONSE_CODES.SUCCESS).json({Message:RESPONSE_MESSAGES.SUCCESS})
+        res.status(RESPONSE_CODES.SUCCESS).json({Message:RESPONSE_MESSAGES.SUCCESS,result:user_login})
       }
       catch(error){
         res.status(RESPONSE_CODES.INTERNAL_SERVER_ERROR).json({message:error})
